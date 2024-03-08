@@ -1,0 +1,36 @@
+name: push-trigger
+on:
+    push:
+        branches: main
+
+jobs:
+    job1:
+        name: ubuntu date
+        runs-on: ubuntu-latest
+        steps:
+        - name: date
+          run: date
+    job2:
+        name: windows date
+        needs: job1
+        runs-on: windows-latest
+        steps:
+        - name: date
+          run: date
+    job3:
+        name: macos date
+        needs: job1
+        runs-on: macos-latest
+        steps:
+        - name: date
+          run: date
+    job4:
+        name: dependent job
+        needs: [job1, job2, job3]
+        runs-on: ubuntu-latest
+        steps:
+        - name: checkout
+          uses: actions/checkout@v2
+        - name: date
+          run: date
+    
